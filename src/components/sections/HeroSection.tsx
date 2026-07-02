@@ -34,7 +34,7 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
         {/* Main Campaign Headline */}
         <div className="w-full text-left mb-4.5 space-y-2.5 animate-fade-in-up">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[11px] font-bold text-brand-blue uppercase tracking-wider select-none">
-            ⭐ India&apos;s Trusted Steel Marketplace
+            ⭐ Your Trusted Steel Marketplace
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl leading-tight">
             Get Best Prices today on{" "}
@@ -43,7 +43,7 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
             </span>
           </h1>
           <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-sm">
-            Compare quotes from certified steel mills and wholesale dealers in your area instantly.
+            Compare quotes from certified steel mills and verified sellers in your area instantly.
           </p>
         </div>
 

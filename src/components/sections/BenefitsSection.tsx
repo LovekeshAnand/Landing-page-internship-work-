@@ -13,7 +13,10 @@ import {
   LayoutGrid,
   Clock,
   Globe,
-  TrendingUp
+  TrendingUp,
+  Handshake,
+  Network,
+  Tag
 } from "lucide-react";
 import { BUYER_BENEFITS, SELLER_BENEFITS, Benefit } from "@/data/landingData";
 
@@ -36,6 +39,12 @@ export default function BenefitsSection() {
         return <Clock className={iconStyles} />;
       case "globe":
         return <Globe className={iconStyles} />;
+      case "handshake":
+        return <Handshake className={iconStyles} />;
+      case "network":
+        return <Network className={iconStyles} />;
+      case "tag":
+        return <Tag className={iconStyles} />;
       // Seller Icons
       case "trend":
         return <TrendingUp className={iconStyles} />;
@@ -62,7 +71,7 @@ export default function BenefitsSection() {
             Whether you are a buyer or seller here&apos;s what EaseInfra gives you!
           </h2>
           <p className="text-xs text-slate-500 mt-2 max-w-xs mx-auto leading-relaxed">
-            Our platform connects both sides of the trade with transparent, live steel prices and direct supplier matching.
+            Our platform connects both sides of the trade with transparent live steel prices and direct supplier matching.
           </p>
         </div>
 

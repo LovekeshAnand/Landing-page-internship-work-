@@ -58,7 +58,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
     quantity?: string; 
     location?: string;
     name?: string;
-    email?: string;
+    phone?: string;
   }>({});
 
   // Close dropdowns on click outside
@@ -107,8 +107,13 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
     if (!name.trim()) {
       newErrors.name = "Please enter your name";
     }
-    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Please enter a valid email address";
+    if (!phone.trim()) {
+      newErrors.phone = "Please enter your phone number";
+    } else {
+      const cleanPhone = phone.replace(/\D/g, "");
+      if (cleanPhone.length < 10) {
+        newErrors.phone = "Please enter a valid 10-digit phone number";
+      }
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -126,8 +131,8 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
       const formDataToSend = {
         lead_id: generatedLeadId,
         name,
-        email,
-        phone: phone || "Not Provided",
+        email: "Not Provided",
+        phone,
         material: `${selectedBrand.name} TMT Rebar`,
         quantity: `${quantity} Tons`,
         location: `${selectedLocation?.name}, ${selectedLocation?.state}`,
@@ -196,19 +201,19 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
         {!isSuccess ? (
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Header Text */}
-            <div className="text-center sm:text-left mb-2">
-              <h3 className="text-[17px] font-extrabold text-slate-800 tracking-tight">
+            <div className="text-center mb-2">
+              <h3 className="text-[20px] font-extrabold text-slate-800 tracking-tight">
                 Submit Requirement
               </h3>
               <p className="text-xs text-slate-450 mt-0.5 leading-relaxed font-semibold">
-                Get direct, authorized quotes from local distributors.
+                Post your requirement and connect with sellers instantly!
               </p>
             </div>
 
             {/* FIELD 1: Brand Dropdown Selector */}
             <div className="space-y-1.5" ref={brandRef}>
               <label className="text-[10px] font-bold tracking-wider uppercase text-slate-500 select-none">
-                Select Brand
+                Select Product
               </label>
               <div className="relative">
                 <button
@@ -376,30 +381,17 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                   id="phone"
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  label="Phone (Optional)"
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    if (errors.phone) setErrors({ ...errors, phone: undefined });
+                  }}
+                  label="Phone Number"
                   placeholder="e.g. 9876543210"
                   leftIcon={<Phone className="h-4 w-4 text-slate-400" />}
+                  error={errors.phone}
+                  required
                 />
               </div>
-            </div>
-
-            {/* FIELD 6: Contact Email */}
-            <div className="space-y-1.5">
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (errors.email) setErrors({ ...errors, email: undefined });
-                }}
-                label="Email Address"
-                placeholder="you@example.com"
-                leftIcon={<Mail className="h-4 w-4 text-slate-400" />}
-                error={errors.email}
-                required
-              />
             </div>
 
             {/* Submit Button */}

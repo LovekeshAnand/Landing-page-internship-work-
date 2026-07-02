@@ -48,12 +48,12 @@ export const PROCESS_STEPS: ProcessStep[] = [
   {
     number: 1,
     title: "POST TMT REQUIREMENT",
-    description: "Select your preferred brand, required quantity in tons, and delivery location in our secure form."
+    description: "Select your preferred product, required quantity in tons, and delivery location in our secure form."
   },
   {
     number: 2,
     title: "GET LIVE QUOTES",
-    description: "EaseInfra matches your requirement with authorized, verified distributors in your city to compile quotes."
+    description: "EaseInfra matches your requirement with authorized, verified distributors in your city and our expert will contact you."
   },
   {
     number: 3,
@@ -65,30 +65,30 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export const BUYER_BENEFITS: Benefit[] = [
   {
     title: "Verified Sellers",
-    description: "We vet every seller so you connect only with trusted, authorized steel distributors.",
+    description: "We vet every seller, so you connect only with trusted seller.",
     icon: "shield"
   },
   {
     title: "Live Steel Prices",
-    description: "Track real-time steel prices across brands and locations to stay ahead of market trends.",
-    icon: "currency"
+    description: "Track real time prices and stay ahead of market trends",
+    icon: "handshake"
   },
   {
-    title: "Faster Procurement",
-    description: "Get quotes fast and connect directly with verified suppliers. No middlemen, no delays.",
-    icon: "clock"
+    title: "Faster Buying Process",
+    description: "Get quotes fast, connect directly. No middlemen, no delays.",
+    icon: "network"
   },
   {
     title: "Pan India Network",
-    description: "Access a wide network of verified sellers across key cities and industrial hubs.",
-    icon: "globe"
+    description: "Access sellers across key cities and industrial hub.",
+    icon: "tag"
   }
 ];
 
 export const SELLER_BENEFITS: Benefit[] = [
   {
     title: "Verified Buyer Leads",
-    description: "Receive direct purchase requirements and connect with genuine, phone-verified buyers.",
+    description: "Receive direct purchase requirements and connect with phone-verified buyers.",
     icon: "verify"
   },
   {
@@ -98,7 +98,7 @@ export const SELLER_BENEFITS: Benefit[] = [
   },
   {
     title: "Zero Transaction Cost",
-    description: "List your steel products and connect with buyers for free. No commission or listing fees.",
+    description: "List your steel products and connect with buyers for free. No commission.",
     icon: "percent"
   },
   {
