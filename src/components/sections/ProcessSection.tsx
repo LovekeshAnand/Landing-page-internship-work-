@@ -89,7 +89,7 @@ export default function ProcessSection() {
             
             <div className="relative z-10 space-y-3">
               <h3 className="text-sm font-extrabold text-slate-800 tracking-tight">
-                Want to post another requirement?
+                Share your next requirement, and we'll connect you with the right expert.
               </h3>
               <div className="pt-1">
                 <a
