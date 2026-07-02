@@ -24,7 +24,7 @@ export default function BenefitsSection() {
   const [activeTab, setActiveTab] = useState<"buyers" | "sellers">("buyers");
 
   const getIcon = (iconName: string) => {
-    const iconStyles = "h-5 w-5 text-brand-blue";
+    const iconStyles = "h-5 w-5 text-sky-500";
     switch (iconName) {
       // Buyer Icons
       case "currency":
@@ -105,7 +105,7 @@ export default function BenefitsSection() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Icon Holder */}
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-blue-light/60 text-sky-500">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-sky-500-light/60 text-sky-500">
                 {getIcon(benefit.icon)}
               </div>
               
