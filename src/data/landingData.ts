@@ -48,34 +48,34 @@ export const PROCESS_STEPS: ProcessStep[] = [
   {
     number: 1,
     title: "POST TMT REQUIREMENT",
-    description: "Select your preferred product, required quantity in tons, and delivery location in our secure form."
+    description: "Select your product, quantity, and delivery location."
   },
   {
     number: 2,
     title: "GET LIVE QUOTES",
-    description: "EaseInfra matches your requirement with authorized, verified distributors in your city and our expert will contact you."
+    description: "Our expert will contact you and connect you with verified suppliers for competitive quotes."
   },
   {
     number: 3,
     title: "CLOSE DIRECT DEAL",
-    description: "Compare bids, choose the best quote, and coordinate delivery directly with the seller—no middlemen."
+    description: "Compare quotes, choose the best deal, and coordinate delivery directly with the seller."
   }
 ];
 
 export const BUYER_BENEFITS: Benefit[] = [
   {
     title: "Verified Sellers",
-    description: "We vet every seller, so you connect only with trusted seller.",
+    description: "We verify every seller, so you connect only with trusted suppliers. ",
     icon: "shield"
   },
   {
     title: "Live Steel Prices",
-    description: "Track real time prices and stay ahead of market trends",
+    description: "Track live steel prices and stay ahead of market trends.",
     icon: "handshake"
   },
   {
     title: "Faster Buying Process",
-    description: "Get quotes fast, connect directly. No middlemen, no delays.",
+    description: "Get quotes faster. Connect directly. No middlemen.",
     icon: "network"
   },
   {
@@ -88,7 +88,7 @@ export const BUYER_BENEFITS: Benefit[] = [
 export const SELLER_BENEFITS: Benefit[] = [
   {
     title: "Verified Buyer Leads",
-    description: "Receive direct purchase requirements and connect with phone-verified buyers.",
+    description: "Receive direct purchase requirements from verified buyers.",
     icon: "verify"
   },
   {
@@ -98,12 +98,12 @@ export const SELLER_BENEFITS: Benefit[] = [
   },
   {
     title: "Zero Transaction Cost",
-    description: "List your steel products and connect with buyers for free. No commission.",
+    description: "No commission on successful deals.",
     icon: "percent"
   },
   {
     title: "Pan India Reach",
-    description: "Expand your dealership network and reach construction buyers across all regions of India.",
+    description: "Expand your business and reach buyers across India..",
     icon: "globe"
   }
 ];

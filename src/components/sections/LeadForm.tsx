@@ -212,7 +212,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
 
             {/* FIELD 1: Brand Dropdown Selector */}
             <div className="space-y-1.5" ref={brandRef}>
-              <label className="text-[10px] font-bold tracking-wider uppercase text-slate-500 select-none">
+              <label className="text-[10px] font-bold tracking-wider uppercase text-slate-700 select-none">
                 Select Product
               </label>
               <div className="relative">
@@ -281,7 +281,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
 
             {/* FIELD 3: Delivery Location */}
             <div className="space-y-1.5" ref={locationRef}>
-              <label className="text-[10px] font-bold tracking-wider uppercase text-slate-500 select-none">
+              <label className="text-[10px] font-bold tracking-wider uppercase text-slate-700 select-none">
                 Delivery Location
               </label>
               <div className="relative">
@@ -405,7 +405,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                 className="shadow-md shadow-brand-blue/20 hover:shadow-lg hover:shadow-brand-blue/30 active:scale-98 transition-all"
                 rightIcon={<Truck className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />}
               >
-                {isSubmitting ? "Matching with Suppliers..." : "Get Instant Quotes"}
+                {isSubmitting ? "Matching with Suppliers..." : "Get Best Price"}
               </Button>
             </div>
             
@@ -417,7 +417,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
           /* SUCCESS STATE */
           <div className="py-8 animate-fade-in-up text-center flex flex-col items-center justify-center space-y-4 min-h-[300px]">
             <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-50 border border-blue-100 shadow-sm animate-bounce">
-              <Loader2 className="h-8 w-8 text-brand-blue animate-spin" />
+              <Loader2 className="h-8 w-8 text-sky-600 animate-spin" />
             </div>
             <h3 className="text-xl font-bold text-slate-800 tracking-tight">
               Redirecting you to EaseInfra

@@ -68,7 +68,7 @@ export default function BenefitsSection() {
         {/* Section Header */}
         <div className="text-center mb-9">
           <h2 className="text-xl font-black text-slate-800 tracking-tight leading-tight">
-            Whether you are a buyer or seller here&apos;s what EaseInfra gives you!
+            Built for Buyers and Sellers!
           </h2>
           <p className="text-xs text-slate-500 mt-2 max-w-xs mx-auto leading-relaxed">
             Our platform connects both sides of the trade with transparent live steel prices and direct supplier matching.

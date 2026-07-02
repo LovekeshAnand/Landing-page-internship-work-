@@ -33,17 +33,17 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
       <div className="relative z-10 mx-auto max-w-md flex flex-col items-center">
         {/* Main Campaign Headline */}
         <div className="w-full text-left mb-4.5 space-y-2.5 animate-fade-in-up">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[11px] font-bold text-brand-blue uppercase tracking-wider select-none">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[11px] font-bold text-sky-300 uppercase tracking-wider select-none">
             ⭐ Your Trusted Steel Marketplace
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl leading-tight">
-            Get Best Prices today on{" "}
-            <span className="text-brand-blue">
-              EaseInfra
+            Get Best Prices Today on{" "}
+            <span className="text-sky-500">
+              easeInfra
             </span>
           </h1>
           <p className="text-sm text-slate-600 font-medium leading-relaxed max-w-sm">
-            Compare quotes from certified steel mills and verified sellers in your area instantly.
+            Compare quotes from verified steel suppliers near you.
           </p>
         </div>
 
@@ -77,9 +77,6 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
             </div>
           </div>
         </div>
-
-        {/* Horizontal thin brand-blue line matching the EaseInfra logo brand color */}
-        <div className="w-full h-[1px] bg-[#03A4E6] mb-5.5"></div>
 
         {/* Lead Capturing Form */}
         <div className="w-full animate-fade-in-up">
