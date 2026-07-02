@@ -172,16 +172,6 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
     }
   };
 
-  // Trigger redirection after popup appears
-  useEffect(() => {
-    if (showRedirectModal) {
-      const timer = setTimeout(() => {
-        window.location.href = "https://easeinfra.com";
-      }, 2500);
-      return () => clearTimeout(timer);
-    }
-  }, [showRedirectModal]);
-
   const resetForm = () => {
     setQuantity("");
     setSelectedLocation(null);
@@ -405,7 +395,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                 className="shadow-md shadow-brand-blue/20 hover:shadow-lg hover:shadow-brand-blue/30 active:scale-98 transition-all"
                 rightIcon={<Truck className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />}
               >
-                {isSubmitting ? "Matching with Suppliers..." : "Get Best Price"}
+                {isSubmitting ? "Connecting you with verified sellers..." : "Get Best Price"}
               </Button>
             </div>
             
@@ -420,7 +410,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
               <Loader2 className="h-8 w-8 text-sky-600 animate-spin" />
             </div>
             <h3 className="text-xl font-bold text-slate-800 tracking-tight">
-              Redirecting you to EaseInfra
+              
             </h3>
             <p className="text-xs text-slate-500 font-medium leading-relaxed max-w-xs mx-auto">
               Thank you! Your requirement has been submitted successfully. We are now taking you to India&apos;s trusted steel marketplace.
@@ -430,31 +420,29 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
 
       </div>
 
-      {/* Global Redirection Popup Modal */}
+      {/* Simple Success Popup Modal */}
       {showRedirectModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" />
-          
-          {/* Modal Box */}
-          <div className="relative transform overflow-hidden rounded-3xl bg-white p-6 text-center shadow-2xl transition-all max-w-xs w-full border border-slate-100 flex flex-col items-center space-y-4 animate-fade-in-up">
-            <div className="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-blue-50 border border-blue-100 mb-1">
-              <Loader2 className="h-7 w-7 text-brand-blue animate-spin" />
-            </div>
-            
-            <div className="space-y-1.5">
-              <h3 className="text-lg font-extrabold text-slate-800 tracking-tight">
-                Redirecting to EaseInfra
-              </h3>
-              <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                Your requirement has been submitted. We are taking you to India&apos;s trusted steel marketplace.
-              </p>
-            </div>
+          <div className="absolute inset-0 bg-black/50" />
 
-            {/* Progress line */}
-            <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-              <div className="bg-brand-blue h-full rounded-full animate-redirect-progress" />
-            </div>
+          {/* Modal Box */}
+          <div className="relative bg-white rounded-xl p-6 text-center shadow-lg max-w-xs w-full border border-slate-200 space-y-3">
+            <h3 className="text-base font-bold text-slate-800">
+              ✅ Requirement Submitted
+            </h3>
+            <p className="text-sm text-slate-600">
+              Our expert will contact you shortly. Meanwhile, explore verified sellers.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                window.location.href = "https://easeinfra.com";
+              }}
+              className="w-full mt-2 bg-brand-blue text-white text-sm font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              View Verified Sellers
+            </button>
           </div>
         </div>
       )}

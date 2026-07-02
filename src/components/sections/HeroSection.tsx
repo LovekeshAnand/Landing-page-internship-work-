@@ -33,7 +33,7 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
       <div className="relative z-10 mx-auto max-w-md flex flex-col items-center">
         {/* Main Campaign Headline */}
         <div className="w-full text-left mb-4.5 space-y-2.5 animate-fade-in-up">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[11px] font-bold text-sky-300 uppercase tracking-wider select-none">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[11px] font-bold text-sky-500 uppercase tracking-wider select-none">
             ⭐ Your Trusted Steel Marketplace
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl leading-tight">

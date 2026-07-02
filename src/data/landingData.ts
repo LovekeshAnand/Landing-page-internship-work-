@@ -47,17 +47,17 @@ export const LOCATIONS: Location[] = [
 export const PROCESS_STEPS: ProcessStep[] = [
   {
     number: 1,
-    title: "POST TMT REQUIREMENT",
+    title: "POST REQUIREMENT",
     description: "Select your product, quantity, and delivery location."
   },
   {
     number: 2,
-    title: "GET LIVE QUOTES",
+    title: "GET QUOTES",
     description: "Our expert will contact you and connect you with verified suppliers for competitive quotes."
   },
   {
     number: 3,
-    title: "CLOSE DIRECT DEAL",
+    title: "CLOSE DEALS DIRECTLY",
     description: "Compare quotes, choose the best deal, and coordinate delivery directly with the seller."
   }
 ];
