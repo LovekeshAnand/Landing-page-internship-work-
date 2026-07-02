@@ -25,7 +25,7 @@ export interface Benefit {
 }
 
 export const BRANDS: Brand[] = [
-  { id: "rathi", name: "Rathi", logoText: "R", description: "Rathi Steel - A legacy of trust and high ductility rebars", bannerUrl: "/brand-creative.png" },
+  { id: "rathi", name: "Rathi", logoText: "R", description: "Rathi Steel - A legacy of trust and high ductility rebars", bannerUrl: "/tmt_creative.jpeg" },
   { id: "tata-tiscon", name: "Tata Tiscon", logoText: "TT", description: "Tata Tiscon - India's premium Fe 550D grade steel", bannerUrl: "/tata-creative.png" },
   { id: "jindal-panther", name: "Jindal Panther", logoText: "JP", description: "Jindal Panther - High strength and seismic resistant rebars", bannerUrl: "/jindal-creative.png" },
   { id: "jsw-neosteel", name: "JSW Neosteel", logoText: "JSW", description: "JSW Neosteel - Premium Thermo-Mechanically Treated bars", bannerUrl: "/jsw-creative.png" },

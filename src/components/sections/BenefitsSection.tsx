@@ -105,7 +105,7 @@ export default function BenefitsSection() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Icon Holder */}
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-blue-light/60 text-brand-blue">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-blue-light/60 text-sky-500">
                 {getIcon(benefit.icon)}
               </div>
               

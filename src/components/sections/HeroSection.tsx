@@ -50,10 +50,6 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
         {/* Brand Creative Area (Banner) */}
         <div className="w-full mb-5.5 animate-fade-in-up">
           <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/50 p-2 shadow-sm transition-all duration-300 hover:border-slate-300/80 hover:shadow-md">
-            {/* Tag */}
-            <span className="absolute top-3.5 left-3.5 z-10 rounded-lg bg-orange-500/90 backdrop-blur-sm px-2 py-0.5 text-[9px] font-extrabold text-white uppercase tracking-wider shadow-sm select-none">
-              Campaign Offer
-            </span>
             
             {/* Banner Image Container */}
             <div className="relative aspect-[21/9] w-full overflow-hidden rounded-xl bg-slate-100">
@@ -66,14 +62,6 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
               />
               {/* Overlay vignette */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent"></div>
-            </div>
-            
-            {/* Subtle brand attribution text */}
-            <div className="mt-2 px-1 flex justify-between items-center text-[9px] text-slate-400 font-bold select-none uppercase tracking-wide">
-              <span>{activeBrand.name} Steel Dealership campaign</span>
-              <span className="text-orange-500 flex items-center gap-1 font-extrabold">
-                ● Active Quotes
-              </span>
             </div>
           </div>
         </div>

@@ -210,16 +210,16 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                   type="button"
                   onClick={() => setIsBrandOpen(!isBrandOpen)}
                   className={`w-full flex items-center justify-between rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold transition-all duration-200 text-left cursor-pointer
-                    ${isBrandOpen ? "border-brand-blue ring-2 ring-brand-blue/10" : "border-slate-200 hover:border-slate-350"}
+                    ${isBrandOpen ? "border-sky-500 ring-2 ring-sky-500/10" : "border-slate-200 hover:border-slate-350"}
                   `}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <Layers className="h-4 w-4 shrink-0 text-brand-blue" />
+                    <Layers className="h-4 w-4 shrink-0 text-sky-500" />
                     <span className="truncate font-bold text-slate-700">
                       {getBrandDisplayName(selectedBrand)}
                     </span>
                   </div>
-                  <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform duration-200 shrink-0 ${isBrandOpen ? "rotate-180 text-brand-blue" : ""}`} />
+                  <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform duration-200 shrink-0 ${isBrandOpen ? "rotate-180 text-sky-500" : ""}`} />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -234,12 +234,12 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                           setIsBrandOpen(false);
                         }}
                         className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors text-left hover:bg-slate-50 cursor-pointer
-                          ${selectedBrand.id === b.id ? "bg-brand-blue-light/50 text-brand-blue font-semibold" : "text-slate-700"}
+                          ${selectedBrand.id === b.id ? "bg-sky-500-light/50 text-sky-500 font-semibold" : "text-slate-700"}
                         `}
                       >
                         <span className="truncate font-semibold">{getBrandDisplayName(b)}</span>
                         {selectedBrand.id === b.id && (
-                          <Check className="h-4 w-4 text-brand-blue shrink-0 ml-2" />
+                          <Check className="h-4 w-4 text-sky-500 shrink-0 ml-2" />
                         )}
                       </button>
                     ))}
@@ -281,16 +281,16 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                     setIsLocationOpen(!isLocationOpen);
                   }}
                   className={`w-full flex items-center justify-between rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold transition-all duration-200 text-left cursor-pointer
-                    ${errors.location ? "border-red-300" : isLocationOpen ? "border-brand-blue ring-2 ring-brand-blue/10" : "border-slate-200 hover:border-slate-350"}
+                    ${errors.location ? "border-red-300" : isLocationOpen ? "border-sky-500 ring-2 ring-sky-500/10" : "border-slate-200 hover:border-slate-350"}
                   `}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <MapPin className={`h-4 w-4 shrink-0 ${selectedLocation ? "text-brand-blue" : "text-slate-400"}`} />
+                    <MapPin className={`h-4 w-4 shrink-0 ${selectedLocation ? "text-sky-500" : "text-slate-400"}`} />
                     <span className={`truncate ${selectedLocation ? "font-bold text-slate-700" : "text-slate-400 font-normal"}`}>
                       {selectedLocation ? `${selectedLocation.name}, ${selectedLocation.state}` : "Select delivery location"}
                     </span>
                   </div>
-                  <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform duration-200 shrink-0 ${isLocationOpen ? "rotate-180 text-brand-blue" : ""}`} />
+                  <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform duration-200 shrink-0 ${isLocationOpen ? "rotate-180 text-sky-500" : ""}`} />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -304,7 +304,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                           value={locationSearch}
                           onChange={(e) => setLocationSearch(e.target.value)}
                           placeholder="Search city..."
-                          className="w-full rounded-lg border border-slate-200 pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/10"
+                          className="w-full rounded-lg border border-slate-200 pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/10"
                         />
                       </div>
                     </div>
@@ -324,7 +324,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                             if (errors.location) setErrors({ ...errors, location: undefined });
                           }}
                           className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors text-left hover:bg-slate-50 cursor-pointer
-                            ${selectedLocation?.id === loc.id ? "bg-brand-blue-light/50 text-brand-blue font-semibold" : "text-slate-700"}
+                            ${selectedLocation?.id === loc.id ? "bg-sky-500-light/50 text-sky-500 font-semibold" : "text-slate-700"}
                           `}
                         >
                           <div className="flex flex-col min-w-0">
@@ -332,7 +332,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                             <span className="text-[9px] text-slate-400 font-normal truncate">{loc.state}</span>
                           </div>
                           {selectedLocation?.id === loc.id && (
-                            <Check className="h-4 w-4 text-brand-blue shrink-0 ml-2" />
+                            <Check className="h-4 w-4 text-sky-500 shrink-0 ml-2" />
                           )}
                         </button>
                       ))
@@ -392,7 +392,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                 size="lg"
                 fullWidth
                 isLoading={isSubmitting}
-                className="shadow-md shadow-brand-blue/20 hover:shadow-lg hover:shadow-brand-blue/30 active:scale-98 transition-all"
+                className="shadow-md shadow-sky-500/20 hover:shadow-lg hover:shadow-sky-500/30 active:scale-98 transition-all"
                 rightIcon={<Truck className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />}
               >
                 {isSubmitting ? "Connecting you with verified sellers..." : "Get Best Price"}
@@ -439,7 +439,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
               onClick={() => {
                 window.location.href = "https://easeinfra.com";
               }}
-              className="w-full mt-2 bg-brand-blue text-white text-sm font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity"
+              className="w-full mt-2 bg-sky-500 text-white text-sm font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity"
             >
               View Verified Sellers
             </button>

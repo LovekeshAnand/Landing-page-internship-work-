@@ -89,7 +89,7 @@ export default function ProcessSection() {
             
             <div className="relative z-10 space-y-3">
               <h3 className="text-sm font-extrabold text-slate-800 tracking-tight">
-                Share your next requirement, and we'll connect you with the right expert.
+                Explore verified suppliers, live prices, and more.
               </h3>
               <div className="pt-1">
                 <a
@@ -104,7 +104,7 @@ export default function ProcessSection() {
                     fullWidth
                     rightIcon={<ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
                   >
-                    Visit EaseInfra today
+                    Visit easeInfra today
                   </Button>
                 </a>
               </div>

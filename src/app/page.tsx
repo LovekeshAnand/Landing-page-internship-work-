@@ -26,7 +26,7 @@ export default function Home() {
           {/* Section 1: Dynamic campaign Hero, Logo, Creative and Form */}
           <Suspense fallback={
             <div className="flex flex-col items-center justify-center p-12 bg-white min-h-[350px]">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-blue"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500"></div>
               <span className="text-[10px] text-slate-400 font-bold uppercase mt-3 tracking-wider select-none">
                 Loading Campaign...
               </span>
