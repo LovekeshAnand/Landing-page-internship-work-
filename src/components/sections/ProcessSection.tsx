@@ -9,11 +9,11 @@ export default function ProcessSection() {
   const getIcon = (stepNumber: number) => {
     switch (stepNumber) {
       case 1:
-        return <ClipboardList className="h-6 w-6 text-sky-500" />;
+        return <ClipboardList className="h-6 w-6 text-sky-700" />;
       case 2:
-        return <BadgePercent className="h-6 w-6 text-sky-500" />;
+        return <BadgePercent className="h-6 w-6 text-sky-700" />;
       case 3:
-        return <ShieldCheck className="h-6 w-6 text-sky-500" />;
+        return <ShieldCheck className="h-6 w-6 text-sky-700" />;
       default:
         return null;
     }
@@ -25,7 +25,7 @@ export default function ProcessSection() {
         
         {/* Section Header */}
         <div className="text-center mb-10">
-          <span className="text-[11px] font-bold tracking-wider text-sky-500 uppercase bg-sky-500-light px-3 py-1 rounded-full select-none">
+          <span className="text-[11px] font-bold tracking-wider text-sky-700 uppercase bg-sky-700-light px-3 py-1 rounded-full select-none">
             Simple 3-Step Process
           </span>
           <h2 className="text-2xl font-black text-slate-800 tracking-tight mt-3">
@@ -47,14 +47,14 @@ export default function ProcessSection() {
                 {/* Step Card */}
                 <div className="w-full group relative flex items-start gap-4.5 rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-slate-200/60">
                   {/* Icon Circle */}
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm text-sky-500 transition-transform duration-300 group-hover:scale-105">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm text-sky-700 transition-transform duration-300 group-hover:scale-105">
                     {getIcon(step.number)}
                   </div>
                   
                   {/* Content */}
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-bold text-sky-500/70 font-mono tracking-wider">
+                      <span className="text-[10px] font-bold text-sky-700/70 font-mono tracking-wider">
                         STEP 0{step.number}
                       </span>
                       <div className="h-1 w-1 rounded-full bg-slate-300"></div>
@@ -70,7 +70,7 @@ export default function ProcessSection() {
 
                 {/* Connecting Arrow */}
                 {!isLast && (
-                  <div className="my-4 flex items-center justify-center text-sky-500/30 animate-pulse">
+                  <div className="my-4 flex items-center justify-center text-sky-700/30 animate-pulse">
                     <ArrowDown className="h-6 w-6 stroke-[3]" />
                   </div>
                 )}
@@ -82,9 +82,9 @@ export default function ProcessSection() {
 
         {/* Call To Action Container: "Want to post another requirement?" */}
         <div className="mt-12">
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-500-light via-blue-50/40 to-slate-50 border border-sky-500/10 p-5 text-center shadow-sm">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-700-light via-blue-50/40 to-slate-50 border border-sky-700/10 p-5 text-center shadow-sm">
             {/* Background graphics */}
-            <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-sky-500/5 blur-xl"></div>
+            <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-sky-700/5 blur-xl"></div>
             <div className="absolute -left-8 -bottom-8 h-24 w-24 rounded-full bg-indigo-500/5 blur-xl"></div>
             
             <div className="relative z-10 space-y-3">
