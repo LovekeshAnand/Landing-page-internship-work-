@@ -25,12 +25,17 @@ export interface Benefit {
 }
 
 export const BRANDS: Brand[] = [
-  { id: "rathi", name: "Rathi", logoText: "R", description: "Rathi Steel - A legacy of trust and high ductility rebars", bannerUrl: "/tmt_creative.jpeg" },
-  { id: "tata-tiscon", name: "Tata Tiscon", logoText: "TT", description: "Tata Tiscon - India's premium Fe 550D grade steel", bannerUrl: "/tata-creative.png" },
-  { id: "jindal-panther", name: "Jindal Panther", logoText: "JP", description: "Jindal Panther - High strength and seismic resistant rebars", bannerUrl: "/jindal-creative.png" },
-  { id: "jsw-neosteel", name: "JSW Neosteel", logoText: "JSW", description: "JSW Neosteel - Premium Thermo-Mechanically Treated bars", bannerUrl: "/jsw-creative.png" },
-  { id: "sail", name: "SAIL", logoText: "SAIL", description: "Steel Authority of India - Government trusted durability", bannerUrl: "/brand-creative.png" },
-  { id: "kamdhenu", name: "Kamdhenu", logoText: "K", description: "Kamdhenu Next - Double rib patterns for superior concrete grip", bannerUrl: "/brand-creative.png" }
+  { id: "rathi", name: "Rathi", logoText: "R", description: "Rathi Steel - A legacy of trust and high ductility rebars", bannerUrl: "/brands/rathi.png" },
+  { id: "tata", name: "Tata Tiscon", logoText: "TT", description: "Tata Tiscon - India's premium Fe 550D grade steel", bannerUrl: "/brands/tata.png" },
+  { id: "jindal", name: "Jindal Panther", logoText: "JP", description: "Jindal Panther - High strength and seismic resistant rebars", bannerUrl: "/brands/jindal_panther.png" },
+  { id: "jsw-neo", name: "JSW Neosteel", logoText: "JSW", description: "JSW Neosteel - Premium Thermo-Mechanically Treated bars", bannerUrl: "/brands/jsw_neo.png" },
+  { id: "jsw-one", name: "JSW One", logoText: "JSW", description: "JSW One - Premium industrial steel sheets and bars", bannerUrl: "/brands/jsw_one.png" },
+  { id: "sail", name: "SAIL", logoText: "SAIL", description: "Steel Authority of India - Government trusted durability", bannerUrl: "/brands/sail.png" },
+  { id: "kamdhenu", name: "Kamdhenu", logoText: "K", description: "Kamdhenu Next - Double rib patterns for superior concrete grip", bannerUrl: "/brands/kamdhenu.png" },
+  { id: "electrosteel", name: "Electrosteel", logoText: "ES", description: "Electrosteel - Premium structural steel and rebars", bannerUrl: "/brands/electrosteel.png" },
+  { id: "birla", name: "Birla", logoText: "B", description: "Birla TMT - Engineered for extreme strength and high durability", bannerUrl: "/brands/birla.png" },
+  { id: "shyam", name: "Shyam Steel", logoText: "SS", description: "Shyam Steel - Flexi-strong rebars trusted for high-load structures", bannerUrl: "/brands/shyam.png" },
+  { id: "srmb", name: "SRMB Steel", logoText: "SRMB", description: "SRMB Steel - High-grip thermo-mechanically treated bars", bannerUrl: "/brands/srmb.png" }
 ];
 
 export const LOCATIONS: Location[] = [

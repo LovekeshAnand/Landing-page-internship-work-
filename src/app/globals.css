@@ -85,3 +85,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #cbd5e1;
 }
+
+/* Hide Google Translate top banner frame */
+iframe.skiptranslate, 
+.goog-te-banner-frame,
+#goog-gt-tt {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+#google_translate_element {
+  display: none !important;
+}
+
+/* Override styling of the original Google combo box if it gets inserted */
+.skiptranslate {
+  display: none !important;
+}

@@ -14,7 +14,8 @@ export default function BrandLogo({ className = "" }: BrandLogoProps) {
         width={130}
         height={32}
         priority
-        className="h-8 w-auto object-contain"
+        style={{ width: "auto", height: "auto" }}
+        className="h-8 object-contain"
       />
     </div>
   );

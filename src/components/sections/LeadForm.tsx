@@ -20,16 +20,54 @@ import {
 import Input from "../common/Input";
 import Button from "../common/Button";
 import { LOCATIONS, BRANDS, Brand, Location } from "@/data/landingData";
+import { useRouter } from "next/navigation";
 
 interface LeadFormProps {
   activeBrand: Brand;
+  onBrandChange?: (brand: Brand) => void;
 }
 
-export default function LeadForm({ activeBrand }: LeadFormProps) {
+export default function LeadForm({ activeBrand, onBrandChange }: LeadFormProps) {
+  const router = useRouter();
   // Form State
   const [selectedBrand, setSelectedBrand] = useState<Brand>(activeBrand);
   const [isBrandOpen, setIsBrandOpen] = useState(false);
   const brandRef = useRef<HTMLDivElement>(null);
+
+  const [hasFormStarted, setHasFormStarted] = useState(false);
+  const triggerFormStart = () => {
+    if (!hasFormStarted) {
+      setHasFormStarted(true);
+      if (typeof window !== "undefined") {
+        const win = window as any;
+        win.dataLayer = win.dataLayer || [];
+        win.dataLayer.push({
+          event: "form_start",
+          form_id: "lead_capturing_form"
+        });
+      }
+    }
+  };
+
+  // Track global clicks on the floating WhatsApp button
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const floatingWhatsappBtn = target.closest("#floating-whatsapp-btn");
+      if (floatingWhatsappBtn) {
+        const win = window as any;
+        win.dataLayer = win.dataLayer || [];
+        win.dataLayer.push({
+          event: "click_whatsapp",
+          location: "floating_button",
+          brand: selectedBrand.id
+        });
+      }
+    };
+    
+    document.addEventListener("click", handleGlobalClick);
+    return () => document.removeEventListener("click", handleGlobalClick);
+  }, [selectedBrand.id]);
   
   const [quantity, setQuantity] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
@@ -42,6 +80,8 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
   // Dropdown visibility
   const [isLocationOpen, setIsLocationOpen] = useState(false);
   const [locationSearch, setLocationSearch] = useState("");
+  const [apiLocations, setApiLocations] = useState<Location[]>([]);
+  const [isLoadingLocations, setIsLoadingLocations] = useState(false);
 
   // Refs for closing dropdowns on click outside
   const locationRef = useRef<HTMLDivElement>(null);
@@ -51,7 +91,6 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [leadId, setLeadId] = useState("");
   const [successStep, setSuccessStep] = useState(0);
-  const [showRedirectModal, setShowRedirectModal] = useState(false);
 
   // Errors state
   const [errors, setErrors] = useState<{ 
@@ -81,16 +120,105 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
   }, [activeBrand]);
 
   const getBrandDisplayName = (b: Brand) => {
-    if (b.id === "jsw-neosteel") return "JSW Neo TMT Bar";
+    if (b.id === "jsw-neo") return "JSW Neo TMT Bar";
     if (b.id === "rathi") return "Rathi TMT Bar";
     return `${b.name} TMT Bar`;
   };
 
-  // Filter locations by search term
-  const filteredLocations = LOCATIONS.filter(loc =>
-    loc.name.toLowerCase().includes(locationSearch.toLowerCase()) ||
-    loc.state.toLowerCase().includes(locationSearch.toLowerCase())
-  );
+  // Fetch locations from public API
+  useEffect(() => {
+    let active = true;
+    setIsLoadingLocations(true);
+
+    const fetchLocations = async () => {
+      try {
+        const response = await fetch(
+          `https://api.easeinfra.com/user/common/getAllLocations?search=${encodeURIComponent(locationSearch)}`
+        );
+        
+        if (response.status === 404) {
+          if (active) {
+            setApiLocations([]);
+          }
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.success && Array.isArray(data.data)) {
+          const mappedLocations: Location[] = data.data.map((locName: string) => ({
+            id: locName,
+            name: locName,
+            state: "",
+          }));
+          if (active) {
+            setApiLocations(mappedLocations);
+          }
+        } else if (data.success === false && data.message === "No locations found.") {
+          if (active) {
+            setApiLocations([]);
+          }
+        } else {
+          throw new Error("Invalid API response format");
+        }
+      } catch (err) {
+        console.error("Failed to fetch locations from API, falling back to local JSON:", err);
+        if (active) {
+          const fallback = LOCATIONS.filter(loc =>
+            loc.name.toLowerCase().includes(locationSearch.toLowerCase()) ||
+            loc.state.toLowerCase().includes(locationSearch.toLowerCase())
+          ).map(loc => ({
+            id: loc.id,
+            name: loc.name,
+            state: loc.state
+          }));
+          setApiLocations(fallback);
+        }
+      } finally {
+        if (active) {
+          setIsLoadingLocations(false);
+        }
+      }
+    };
+
+    const delayDebounceFn = setTimeout(() => {
+      fetchLocations();
+    }, 300);
+
+    return () => {
+      active = false;
+      clearTimeout(delayDebounceFn);
+    };
+  }, [locationSearch]);
+
+  const filteredLocations = apiLocations;
+
+  // Synchronize locationSearch and selectedLocation
+  useEffect(() => {
+    if (!locationSearch.trim()) {
+      setSelectedLocation(null);
+      return;
+    }
+
+    // Check if there is an exact match in apiLocations
+    const exactMatch = apiLocations.find(
+      (loc) => loc.name.toLowerCase() === locationSearch.trim().toLowerCase()
+    );
+
+    if (exactMatch) {
+      setSelectedLocation(exactMatch);
+    } else {
+      // If it doesn't match any API location exactly, treat it as a custom location
+      setSelectedLocation({
+        id: "custom",
+        name: locationSearch.trim(),
+        state: "",
+      });
+    }
+  }, [locationSearch, apiLocations]);
 
   // Handle Form Submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -135,7 +263,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
         phone,
         material: `${selectedBrand.name} TMT Rebar`,
         quantity: `${quantity} Tons`,
-        location: `${selectedLocation?.name}, ${selectedLocation?.state}`,
+        location: selectedLocation?.state ? `${selectedLocation.name}, ${selectedLocation.state}` : (selectedLocation?.name || ""),
       };
 
 
@@ -151,11 +279,11 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
         console.warn("Google Script Web App URL not set/default. Skipping Sheets submission.");
       }
 
-      // Proceed to Redirection Popup
+      // Proceed to Thank You Page
       setIsSubmitting(false);
       setLeadId(generatedLeadId);
       setIsSuccess(true);
-      setShowRedirectModal(true);
+      router.push(`/${selectedBrand.id}/thank-you`);
 
     } catch (error) {
       console.error("Submission failed:", error);
@@ -163,33 +291,33 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
         quantity: "Network submission failed. Displaying simulated backup status." 
       });
       
-      // Fallback: Proceed to success screen in development mode even if network requests fail
+      // Fallback: Proceed to thank you page
       const backupLeadId = "EI-TMT-BACKUP-" + Math.floor(100000 + Math.random() * 900000);
       setIsSubmitting(false);
       setLeadId(backupLeadId);
       setIsSuccess(true);
-      setShowRedirectModal(true);
+      router.push(`/${selectedBrand.id}/thank-you`);
     }
   };
 
   const resetForm = () => {
     setQuantity("");
     setSelectedLocation(null);
+    setLocationSearch("");
     setName("");
     setPhone("");
     setEmail("");
     setIsSuccess(false);
-    setShowRedirectModal(false);
     setErrors({});
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
       {/* Form Container */}
-      <div className="glass-panel rounded-3xl shadow-[0_15px_40px_-15px_rgba(15,98,254,0.12),0_1px_4px_rgba(0,0,0,0.03)] border border-slate-100 p-5 sm:p-6.5 relative transition-all duration-300">
+      <div className="glass-panel rounded-3xl shadow-[0_15px_40px_-15px_rgba(15,98,254,0.12),0_1px_4px_rgba(0,0,0,0.03)] border border-slate-100 p-5 sm:p-6.5 lg:p-7 lg:py-8 relative transition-all duration-300">
         
         {!isSuccess ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-5">
             {/* Header Text */}
             <div className="text-center mb-2">
               <h3 className="text-[20px] font-extrabold text-slate-800 tracking-tight">
@@ -208,8 +336,11 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setIsBrandOpen(!isBrandOpen)}
-                  className={`w-full flex items-center justify-between rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold transition-all duration-200 text-left cursor-pointer
+                  onClick={() => {
+                    setIsBrandOpen(!isBrandOpen);
+                    triggerFormStart();
+                  }}
+                  className={`w-full flex items-center justify-between rounded-xl border bg-white px-4 py-2.5 lg:py-3 text-sm font-semibold transition-all duration-200 text-left cursor-pointer
                     ${isBrandOpen ? "border-sky-500 ring-2 ring-sky-500/10" : "border-slate-200 hover:border-slate-350"}
                   `}
                 >
@@ -232,6 +363,11 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                         onClick={() => {
                           setSelectedBrand(b);
                           setIsBrandOpen(false);
+                          if (onBrandChange) {
+                            onBrandChange(b);
+                          }
+                          window.history.pushState(null, "", `/${b.id}`);
+                          triggerFormStart();
                         }}
                         className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors text-left hover:bg-slate-50 cursor-pointer
                           ${selectedBrand.id === b.id ? "bg-sky-500-light/50 text-sky-500 font-semibold" : "text-slate-700"}
@@ -260,91 +396,125 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                   setQuantity(e.target.value);
                   if (errors.quantity) setErrors({ ...errors, quantity: undefined });
                 }}
+                onFocus={triggerFormStart}
                 label="Quantity (in Tons)"
                 placeholder="e.g. 10"
                 leftIcon={<TrendingUp className="h-4 w-4 text-slate-400" />}
                 rightIcon={<span className="text-xs font-bold text-slate-400 select-none mr-1.5">Tons</span>}
                 error={errors.quantity}
                 required
+                className="lg:py-3"
               />
             </div>
 
             {/* FIELD 3: Delivery Location */}
-            <div className="space-y-1.5" ref={locationRef}>
-              <label className="text-[10px] font-bold tracking-wider uppercase text-slate-700 select-none">
-                Delivery Location
-              </label>
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setIsLocationOpen(!isLocationOpen);
-                  }}
-                  className={`w-full flex items-center justify-between rounded-xl border bg-white px-4 py-2.5 text-sm font-semibold transition-all duration-200 text-left cursor-pointer
-                    ${errors.location ? "border-red-300" : isLocationOpen ? "border-sky-500 ring-2 ring-sky-500/10" : "border-slate-200 hover:border-slate-350"}
-                  `}
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <MapPin className={`h-4 w-4 shrink-0 ${selectedLocation ? "text-sky-500" : "text-slate-400"}`} />
-                    <span className={`truncate ${selectedLocation ? "font-bold text-slate-700" : "text-slate-400 font-normal"}`}>
-                      {selectedLocation ? `${selectedLocation.name}, ${selectedLocation.state}` : "Select delivery location"}
-                    </span>
+            <div className="space-y-1.5 relative" ref={locationRef}>
+              <Input
+                id="location"
+                type="text"
+                value={locationSearch}
+                onChange={(e) => {
+                  setLocationSearch(e.target.value);
+                  setIsLocationOpen(true);
+                  if (errors.location) setErrors({ ...errors, location: undefined });
+                }}
+                onFocus={() => {
+                  setIsLocationOpen(true);
+                }}
+                label="Delivery Location"
+                placeholder="Select or type delivery location"
+                leftIcon={<MapPin className={`h-4 w-4 shrink-0 ${selectedLocation ? "text-sky-500" : "text-slate-400"}`} />}
+                rightIcon={
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsLocationOpen(!isLocationOpen);
+                    }}
+                    className="p-1 -mr-1.5 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer"
+                  >
+                    <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform duration-200 shrink-0 ${isLocationOpen ? "rotate-180 text-sky-500" : ""}`} />
+                  </button>
+                }
+                error={errors.location}
+                required
+                autoComplete="off"
+                className="lg:py-3"
+              />
+
+              {/* Dropdown Menu */}
+              {isLocationOpen && (
+                <div className="absolute z-25 left-0 right-0 mt-1 max-h-56 overflow-y-auto rounded-xl bg-white border border-slate-100 shadow-xl py-1 focus:outline-none">
+                  <div className="px-3 py-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none">
+                    Available locations
                   </div>
-                  <ChevronDown className={`h-4.5 w-4.5 text-slate-400 transition-transform duration-200 shrink-0 ${isLocationOpen ? "rotate-180 text-sky-500" : ""}`} />
-                </button>
-
-                {/* Dropdown Menu */}
-                {isLocationOpen && (
-                  <div className="absolute z-25 left-0 right-0 mt-1.5 max-h-56 overflow-y-auto rounded-xl bg-white border border-slate-100 shadow-xl py-1 focus:outline-none">
-                    <div className="sticky top-0 bg-white px-3 py-2 border-b border-slate-50 z-10">
-                      <div className="relative flex items-center">
-                        <Search className="absolute left-2.5 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
-                        <input
-                          type="text"
-                          value={locationSearch}
-                          onChange={(e) => setLocationSearch(e.target.value)}
-                          placeholder="Search city..."
-                          className="w-full rounded-lg border border-slate-200 pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500/10"
-                        />
-                      </div>
+                  
+                  {isLoadingLocations ? (
+                    <div className="flex items-center justify-center py-6">
+                      <Loader2 className="h-5 w-5 animate-spin text-sky-500" />
                     </div>
-
-                    <div className="px-3 py-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase select-none mt-1">
-                      Available locations
-                    </div>
-                    
-                    {filteredLocations.length > 0 ? (
-                      filteredLocations.map((loc) => (
+                  ) : (
+                    <>
+                      {filteredLocations.map((loc) => (
                         <button
                           key={loc.id}
                           type="button"
                           onClick={() => {
                             setSelectedLocation(loc);
+                            setLocationSearch(loc.name);
                             setIsLocationOpen(false);
                             if (errors.location) setErrors({ ...errors, location: undefined });
                           }}
                           className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors text-left hover:bg-slate-50 cursor-pointer
-                            ${selectedLocation?.id === loc.id ? "bg-sky-500-light/50 text-sky-500 font-semibold" : "text-slate-700"}
+                            ${selectedLocation?.name === loc.name ? "bg-sky-500-light/50 text-sky-500 font-semibold" : "text-slate-700"}
                           `}
                         >
                           <div className="flex flex-col min-w-0">
                             <span className="truncate font-semibold">{loc.name}</span>
-                            <span className="text-[9px] text-slate-400 font-normal truncate">{loc.state}</span>
+                            {loc.state && <span className="text-[9px] text-slate-400 font-normal truncate">{loc.state}</span>}
                           </div>
-                          {selectedLocation?.id === loc.id && (
+                          {selectedLocation?.name === loc.name && (
                             <Check className="h-4 w-4 text-sky-500 shrink-0 ml-2" />
                           )}
                         </button>
-                      ))
-                    ) : (
-                      <div className="px-4 py-4 text-center text-xs text-slate-400 font-medium">
-                        No locations match
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-              {errors.location && <span className="text-xs font-medium text-red-500">{errors.location}</span>}
+                      ))}
+
+                      {/* If user search does not have an exact match in the API results, show custom selectable option */}
+                      {locationSearch.trim() !== "" && !filteredLocations.some(loc => loc.name.toLowerCase() === locationSearch.trim().toLowerCase()) && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const customLoc = {
+                              id: "custom",
+                              name: locationSearch.trim(),
+                              state: "",
+                            };
+                            setSelectedLocation(customLoc);
+                            setLocationSearch(customLoc.name);
+                            setIsLocationOpen(false);
+                            if (errors.location) setErrors({ ...errors, location: undefined });
+                          }}
+                          className="w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors text-left hover:bg-slate-50 cursor-pointer text-slate-700 border-t border-slate-100/50 bg-sky-500-light/10"
+                        >
+                          <div className="flex flex-col min-w-0">
+                            <span className="truncate font-semibold text-sky-600">Use "{locationSearch.trim()}"</span>
+                            <span className="text-[9px] text-slate-400 font-normal truncate">Select typed location</span>
+                          </div>
+                          {selectedLocation?.id === "custom" && selectedLocation?.name === locationSearch.trim() && (
+                            <Check className="h-4 w-4 text-sky-500 shrink-0 ml-2" />
+                          )}
+                        </button>
+                      )}
+
+                      {filteredLocations.length === 0 && locationSearch.trim() === "" && (
+                        <div className="px-4 py-4 text-center text-xs text-slate-400 font-medium">
+                          No locations match
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Contact Name & Phone (Side by Side) */}
@@ -363,6 +533,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                   leftIcon={<User className="h-4 w-4 text-slate-400" />}
                   error={errors.name}
                   required
+                  className="lg:py-3"
                 />
               </div>
 
@@ -380,6 +551,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                   leftIcon={<Phone className="h-4 w-4 text-slate-400" />}
                   error={errors.phone}
                   required
+                  className="lg:py-3"
                 />
               </div>
             </div>
@@ -392,7 +564,7 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
                 size="lg"
                 fullWidth
                 isLoading={isSubmitting}
-                className="shadow-md shadow-sky-500/20 hover:shadow-lg hover:shadow-sky-500/30 active:scale-98 transition-all"
+                className="lg:py-3.5 shadow-md shadow-sky-500/20 hover:shadow-lg hover:shadow-sky-500/30 active:scale-98 transition-all"
                 rightIcon={<Truck className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1" />}
               >
                 {isSubmitting ? "Connecting you with verified sellers..." : "Get Best Price"}
@@ -419,33 +591,6 @@ export default function LeadForm({ activeBrand }: LeadFormProps) {
         )}
 
       </div>
-
-      {/* Simple Success Popup Modal */}
-      {showRedirectModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/50" />
-
-          {/* Modal Box */}
-          <div className="relative bg-white rounded-xl p-6 text-center shadow-lg max-w-xs w-full border border-slate-200 space-y-3">
-            <h3 className="text-base font-bold text-slate-800">
-              ✅ Requirement Submitted
-            </h3>
-            <p className="text-sm text-slate-600">
-              Our expert will contact you shortly. Meanwhile, explore verified sellers.
-            </p>
-            <button
-              type="button"
-              onClick={() => {
-                window.location.href = "https://easeinfra.com";
-              }}
-              className="w-full mt-2 bg-sky-500 text-white text-sm font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity"
-            >
-              View Verified Sellers
-            </button>
-          </div>
-        </div>
-      )}
 
     </div>
   );

@@ -6,7 +6,7 @@ import BrandLogo from "../common/BrandLogo";
 export default function Footer() {
   return (
     <footer className="w-full bg-white border-t border-slate-100 px-4 py-8 text-center select-none">
-      <div className="mx-auto max-w-md flex flex-col items-center gap-4">
+      <div className="mx-auto max-w-md lg:max-w-[1360px] flex flex-col items-center gap-4">
         
         {/* Footer Brand Logo */}
         <BrandLogo className="opacity-90 hover:opacity-100 transition-opacity duration-200" />

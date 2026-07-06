@@ -8,27 +8,13 @@ import { Brand } from "@/data/landingData";
 
 interface HeroSectionProps {
   activeBrand: Brand;
+  onBrandChange?: (brand: Brand) => void;
 }
 
-export default function HeroSection({ activeBrand }: HeroSectionProps) {
+export default function HeroSection({ activeBrand, onBrandChange }: HeroSectionProps) {
   return (
     <section className="relative w-full overflow-hidden bg-white px-4 pt-6 pb-10 sm:px-6">
       
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/hero-bg.png"
-          alt="Steel construction background"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center opacity-[0.07] select-none pointer-events-none"
-        />
-        {/* Soft white-to-light-blue gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/80 to-white"></div>
-        {/* Radial highlight for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-50/20 via-transparent to-transparent"></div>
-      </div>
 
       <div className="relative z-10 mx-auto max-w-md flex flex-col items-center">
         {/* Main Campaign Headline */}
@@ -52,7 +38,7 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
           <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/50 p-2 shadow-sm transition-all duration-300 hover:border-slate-300/80 hover:shadow-md">
             
             {/* Banner Image Container */}
-            <div className="relative aspect-[21/9] w-full overflow-hidden rounded-xl bg-slate-100">
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-slate-100">
               <Image
                 src={activeBrand.bannerUrl}
                 alt={`${activeBrand.name} Campaign Creative`}
@@ -68,7 +54,7 @@ export default function HeroSection({ activeBrand }: HeroSectionProps) {
 
         {/* Lead Capturing Form */}
         <div className="w-full animate-fade-in-up">
-          <LeadForm activeBrand={activeBrand} />
+          <LeadForm activeBrand={activeBrand} onBrandChange={onBrandChange} />
         </div>
 
       </div>

@@ -20,24 +20,56 @@ export default function ProcessSection() {
   };
 
   return (
-    <section className="w-full bg-white px-4 py-12 sm:px-6 sm:py-16">
-      <div className="mx-auto max-w-md">
+    <section className="w-full bg-white px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <div className="mx-auto max-w-md lg:max-w-[1360px]">
         
         {/* Section Header */}
-        <div className="text-center mb-10">
-          <span className="text-[11px] font-bold tracking-wider text-sky-700 uppercase bg-sky-700-light px-3 py-1 rounded-full select-none">
-            Simple 3-Step Process
-          </span>
-          <h2 className="text-2xl font-black text-slate-800 tracking-tight mt-3">
-            How EaseInfra Works
-          </h2>
-          <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
-            From submitting your inquiry to direct site delivery in record time.
-          </p>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-10 gap-6">
+          <div className="text-center lg:text-left">
+            <span className="text-[11px] font-bold tracking-wider text-sky-700 uppercase bg-sky-700-light px-3 py-1 rounded-full select-none">
+              Simple 3-Step Process
+            </span>
+            <h2 className="text-2xl font-black text-slate-800 tracking-tight mt-3">
+              How EaseInfra Works
+            </h2>
+            <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto lg:mx-0">
+              From submitting your inquiry to direct site delivery in record time.
+            </p>
+          </div>
+
+          {/* Desktop Call To Action (only visible on desktop) */}
+          <div className="hidden lg:block w-full max-w-[420px] shrink-0">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-700-light via-blue-50/40 to-slate-50 border border-sky-700/10 p-5 text-left shadow-sm">
+              {/* Background graphics */}
+              <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-sky-700/5 blur-xl"></div>
+              <div className="absolute -left-8 -bottom-8 h-24 w-24 rounded-full bg-sky-500/5 blur-xl"></div>
+              
+              <div className="relative z-10 flex items-center justify-between gap-4">
+                <h3 className="text-xs font-extrabold text-slate-800 tracking-tight leading-snug max-w-[200px]">
+                  Explore verified suppliers, live prices, and more.
+                </h3>
+                <a
+                  href="https://easeinfra.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 animate-pulse hover:animate-none"
+                >
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="px-4 py-2 text-xs font-bold"
+                    rightIcon={<ArrowUpRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}
+                  >
+                    Visit easeinfra today
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Process Steps Stepper */}
-        <div className="relative flex flex-col items-center">
+        <div className="relative flex flex-col items-center lg:grid lg:grid-cols-3 lg:gap-6 lg:items-stretch lg:w-full">
           
           {PROCESS_STEPS.map((step, idx) => {
             const isLast = idx === PROCESS_STEPS.length - 1;
@@ -45,7 +77,7 @@ export default function ProcessSection() {
             return (
               <React.Fragment key={step.number}>
                 {/* Step Card */}
-                <div className="w-full group relative flex items-start gap-4.5 rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-slate-200/60">
+                <div className="w-full group relative flex items-start lg:flex-col gap-4.5 rounded-2xl border border-slate-100 bg-slate-50/50 p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:border-slate-200/60">
                   {/* Icon Circle */}
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm text-sky-700 transition-transform duration-300 group-hover:scale-105">
                     {getIcon(step.number)}
@@ -70,7 +102,7 @@ export default function ProcessSection() {
 
                 {/* Connecting Arrow */}
                 {!isLast && (
-                  <div className="my-4 flex items-center justify-center text-sky-700/30 animate-pulse">
+                  <div className="my-4 flex items-center justify-center text-sky-700/30 animate-pulse lg:hidden">
                     <ArrowDown className="h-6 w-6 stroke-[3]" />
                   </div>
                 )}
@@ -81,11 +113,11 @@ export default function ProcessSection() {
         </div>
 
         {/* Call To Action Container: "Want to post another requirement?" */}
-        <div className="mt-12">
+        <div className="mt-12 lg:max-w-md lg:mx-auto lg:hidden">
           <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-700-light via-blue-50/40 to-slate-50 border border-sky-700/10 p-5 text-center shadow-sm">
             {/* Background graphics */}
             <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-sky-700/5 blur-xl"></div>
-            <div className="absolute -left-8 -bottom-8 h-24 w-24 rounded-full bg-indigo-500/5 blur-xl"></div>
+            <div className="absolute -left-8 -bottom-8 h-24 w-24 rounded-full bg-sky-500/5 blur-xl"></div>
             
             <div className="relative z-10 space-y-3">
               <h3 className="text-sm font-extrabold text-slate-800 tracking-tight">
